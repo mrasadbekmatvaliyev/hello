@@ -19,8 +19,10 @@ COPY . /app
 # 7. JAR faylni build qilamiz
 RUN ./gradlew build
 
-# 8. Portni expose qilamiz (Render `PORT` env var beradi)
+# 8. Portni expose qilamiz (Render yoki Railway `PORT` beradi)
 EXPOSE 8080
 
-# 9. Yaratilgan JAR faylni ishga tushiramiz
-CMD ["sh", "-c", "java -jar build/libs/*.jar"]
+# 9. Appni ishga tushuramiz (entrypoint orqali glob ishlatamiz)
+COPY entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
+CMD ["/app/entrypoint.sh"]
